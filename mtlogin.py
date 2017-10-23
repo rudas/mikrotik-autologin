@@ -21,7 +21,7 @@ def truncate_file(file):
         f.writelines(line)
         f.flush()
     print 'file: "%s" truncated' % f.name
-    
+
 def extract_salt(file):
     f = open(file, 'r')
     li = ''
@@ -45,11 +45,9 @@ def login(username, password):
     headers = {}
     headers.update({'Content-Type':'application/x-www-form-urlencoded'})
     response, _ = h.request(URL, method='POST', body=payload, headers=headers)
-    assert(response.status==200)
     try:
-        response['set-cookie']
-        response['set-cookie']
-    except KeyError:
+        assert(response.status==200)
+    except AssertionError:
         raise Exception('Login Failed')
 
 def main():
@@ -75,6 +73,6 @@ def main():
     print 'hashed password: %s' % hex_hash_password
     login(username, hex_hash_password)
     print 'Successfully logged in ;)'
-    
+
 if __name__ == '__main__':
     main()
